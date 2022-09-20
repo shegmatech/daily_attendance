@@ -8,15 +8,24 @@ class markAttendance extends StatefulWidget {
 }
 
 class _markAttendanceState extends State<markAttendance> {
+
+  bool isAttendance = true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton(
-          onPressed: (){},
+      child: GestureDetector(
+          onTap: (){
+            //TODO: show dialog box for attendance marked and change the signin buttin to signout with redBG
+            setState(() {
+              isAttendance = false;
+            });
+            print(isAttendance);
+          },
           child: Container(
               width: 150,
               height: 150,
-              decoration: const BoxDecoration(shape: BoxShape.circle,)
+              decoration: BoxDecoration(shape: BoxShape.circle, color: isAttendance? Colors.green : Colors.red)
           ))
     );
   }
