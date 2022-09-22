@@ -37,6 +37,7 @@ dependencies:
   cached_network_image: ^3.2.1
   hexcolor: any
   font_awesome_flutter: any
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
