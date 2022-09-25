@@ -1,6 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:daily_attendance/Constants/locationData.dart';
+
 
 class markAttendance extends StatefulWidget {
   const markAttendance({Key? key}) : super(key: key);
@@ -12,18 +14,48 @@ class markAttendance extends StatefulWidget {
 class _markAttendanceState extends State<markAttendance> {
   bool _isAttendance = true;
 
-  void getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position);
-  }
-
 //handle tap function
   void _handleTap() {
-    setState(() {
-      _isAttendance = !_isAttendance;
-      print(_isAttendance);
-    });
+      setState(() {
+        _isAttendance = !_isAttendance;
+        if(_isAttendance == true){
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Confirm',
+            desc: 'Are you sure you want to sign in',
+            btnCancelOnPress: () { Navigator.pop(context);},
+            btnOkOnPress: () {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.success,
+                title: "SignIn Successful",
+                btnOkOnPress: (){Navigator.pop(context);},
+              );
+            },
+          ).show();
+        }
+        if(_isAttendance == false){
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Confirm',
+            desc: 'Are you sure you want to sign out',
+            btnCancelOnPress: () { Navigator.pop(context);},
+            btnOkOnPress: () {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                title: "Signed Out",
+                btnOkOnPress: (){Navigator.pop(context);},
+              );
+            },
+          ).show();
+        }
+        print(_isAttendance);
+      });
   }
 
 //handle tap end
@@ -46,11 +78,10 @@ class _markAttendanceState extends State<markAttendance> {
                               : Colors
                                   .red) //color: isAttendance? Colors.green : Colors.red
                       ))),
-          SizedBox(height: 20.0,),
-          GestureDetector(
-            onTap: getLocation,
-            child: Text("Location here"),
-          )
+          const SizedBox(
+            height: 20.0,
+          ),
+          Text("Location here ${myLocation()}")
         ],
       ),
     );

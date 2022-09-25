@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 
@@ -51,4 +52,30 @@ Widget userInput(TextEditingController userInput, String hintTitle, TextInputTyp
       ),
     ),
   );
+}
+
+//App BG
+appBG(){
+  return const Positioned.fill(
+    child: Image(
+      image: AssetImage(''),
+      //image: AssetImage('assets/BG.jpg'),
+      fit: BoxFit.cover,
+    ),
+  );
+}
+
+
+//awesome dialog trial
+
+AwesomeDialog myAwesomeDialog(String Title, String Description, BuildContext context, DialogType dialogType, AnimType animType,  btnCancelOnPress, btnOkOnPress ){
+  return AwesomeDialog(
+      context: context,
+      dialogType: dialogType,
+      animType: animType,
+      title: Title,
+      desc: Description,
+      btnCancelOnPress: () => btnCancelOnPress,
+      btnOkOnPress: () => btnOkOnPress,
+  )..show();
 }
