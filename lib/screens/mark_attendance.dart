@@ -1,7 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:daily_attendance/Constants/locationData.dart';
+import 'package:location/location.dart';
+
 
 
 class markAttendance extends StatefulWidget {
@@ -12,8 +13,50 @@ class markAttendance extends StatefulWidget {
 }
 
 class _markAttendanceState extends State<markAttendance> {
-  bool _isAttendance = true;
 
+  Future myLocation() async {
+    Location location = Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+
+    latitude = _locationData.latitude;
+    longitude = _locationData.longitude;
+    latitude = _locationData.accuracy;
+
+    //by default, the 3 variables above were initialized with 0.0 values, so
+    //setState is used here so that the UI can be redrawn to show the new state of the variables since new values have been assigned to them
+    setState(() {
+
+    });
+    print("latitude: $latitude, longitude: $longitude, accuracy: $accuracy");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    myLocation();
+  }
+
+  double? latitude=0.0;
+  double? longitude=0.0;
+  double? accuracy=0.0;
+  bool _isAttendance = false;
 //handle tap function
   void _handleTap() {
       setState(() {
@@ -81,7 +124,7 @@ class _markAttendanceState extends State<markAttendance> {
           const SizedBox(
             height: 20.0,
           ),
-          Text("Location here ${myLocation()}")
+          Text("$longitude,$latitude,$accuracy")
         ],
       ),
     );
