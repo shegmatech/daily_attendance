@@ -39,7 +39,7 @@ class InfoScreen extends StatelessWidget {
                             ),
                           ),
                           const Text(
-                            'Africa Prudential',
+                            'Daily Attendance',
                             style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,

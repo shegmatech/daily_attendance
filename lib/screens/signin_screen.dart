@@ -80,7 +80,6 @@ class _SigninScreenState extends State<SigninScreen> {
                       Container(
                         height: 55,
                         // for an exact replicate, remove the padding.
-                        // pour une réplique exact, enlever le padding.
                         padding: const EdgeInsets.only(
                             top: 5, left: 70, right: 70),
                         child: RaisedButton(
